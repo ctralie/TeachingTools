@@ -26,10 +26,12 @@ function drawWheel() {
     var nextX = W/2*Math.cos(theta);
     var nextY = W/2*Math.sin(theta);
     
+    ctx.clearRect(0, 0, W, H);
     ctx.font = "30px Arial";
     ctx.translate(W/2, H/2);
     ctx.rotate(angle);
     
+    //Draw all of the colored triangles
     for (var i = 0; i < N; i++) {
         ctx.rotate(2*Math.PI*i/N);
         ctx.fillStyle = colors[i%colors.length];
@@ -41,6 +43,7 @@ function drawWheel() {
         ctx.fill();    
         ctx.rotate(-2*Math.PI*i/N);
     }
+    //Draw all of the names
     ctx.fillStyle = "#000000";
     for (var i = 0; i < N; i++) {
         ctx.rotate(2*Math.PI*(i- 0.25)/N);
@@ -58,8 +61,8 @@ function drawWheel() {
     ctx.translate(-W/2, -H/2);
     if (spinning) {
         var t = (Date.now() - startTime) / 1000.0;
-        angle = angle0 + omega0*t - 0.5*alpha*t*t;
-        if (targetTime - t < 0) {
+        angle = angle0 + omega0*t - 0.5*alpha*t*t; //The magic constant deceleration formula
+        if (targetTime - t < 0) { //Stop when the target time is reached
             console.log("targetTime = " + targetTime + ", stopping t = " + t + ", angle = " + angle + ", finalAngle = " + finalAngle);
             spinning = false;
         }

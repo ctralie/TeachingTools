@@ -1,0 +1,37 @@
+<!--Programmer: Chris Tralie!-->
+<!--Purpose: To create a "wheel of fortune" app to randomly call on students!-->
+<html>
+<head>
+<script src = "WheelOfFortune.js"></script>
+<body>
+
+<canvas id = "wof" width = "800" height = "800" style="border:1px solid #000000;">
+</canvas><BR>
+<table><tr><td><h3>Lecture Number</h3></td><td><input type="text" id = "lecNum"></input></td></tr></table>
+<button type = "button" onclick = "doSpin()">Spin</button>
+
+<script>
+requestAnimationFrame(drawWheel);
+
+function doSpin(evt) {
+    angle0 = angle % (2*Math.PI);
+    var lecNum = document.getElementById("lecNum");
+    var lecNumVal = perm[parseInt(lecNum.value)];
+    
+    //Given a final angle on which to land and a target time during which to do it
+    //Need to solve for initial angular velocity and constant angular acceleration
+    var NSpins = 1 + Math.round(Math.random()*5);//Choose a random number of spins between 1-6
+    finalAngle = 2*Math.PI*(NSpins + (lecNumVal + 0.5)/names.length);
+    targetTime = 5 + 5*Math.random();//And a random time interval between 5-10 seconds
+    
+    omega0 = 2*(finalAngle - angle0)/targetTime;
+    alpha = omega0/targetTime;
+    
+    spinning = true;
+	startTime = Date.now();
+	requestAnimationFrame(drawWheel);
+}
+</script>
+
+</body>
+</html>

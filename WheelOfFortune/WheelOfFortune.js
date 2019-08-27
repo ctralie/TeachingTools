@@ -1,11 +1,8 @@
 //Programmer: Chris Tralie
 //Purpose: To provide an engine for the wheel of fortune app
 var namestxt;
-HarryPotterNames = ['Hannah Abbot', 'Susan Bones', 'Cho Chang', 'Michael Corner', 'Colin Creevey', 'Seamus Finnigan', 'Marcus Flint', 'Gregory Goyle', 'Anthony Goldstein', 'Hermione Granger', 'Angelina Johnson', 'Lee Jordan', 'Neville Longbottom', 'Luna Lovegood', 'Draco Malfoy', 'Pansy Parkinson', 'Padma Patil', 'Parvati Patil', 'Harry Potter', 'Zacharius Smith', 'Romilda Vane', 'Fred Weasley', 'George Weasley', 'Ginny Weasley', 'Ron Weasley', 'Oliver Wood', 'Blaise Zabini']; //Harry Potter student names
 
-var perm = [13, 22,  4,  7, 17, 23,  0, 16, 21,  9,  6, 25, 12,  1,  2, 24, 14, 26, 19, 10, 15, 20,  3, 11,  5, 18,  8]; //Random permutation fixed ahead of time
-
-var names = HarryPotterNames;
+var names = [];
 var angle = 0;
 var finalAngle = 0;
 var spinning = false;
@@ -14,6 +11,11 @@ var startTime = Date.now();
 var omega0 = 0; //Initial angular velocity
 var alpha = 0.2; //Negative angular acceleration
 var angle0 = 0;
+
+function updateNames() {
+    var textInput = document.getElementById("names");
+    names = textInput.value.split("\n");
+}
 
 function drawWheel() {
     var colors = ['#FFAAAA', '#AAFFAA', '#AAAAFF', '#FFFF00', '#00FFFF', '#FF00FF'];
@@ -63,7 +65,7 @@ function drawWheel() {
         var t = (Date.now() - startTime) / 1000.0;
         angle = angle0 + omega0*t - 0.5*alpha*t*t; //The magic constant deceleration formula
         if (targetTime - t < 0) { //Stop when the target time is reached
-            console.log("targetTime = " + targetTime + ", stopping t = " + t + ", angle = " + angle + ", finalAngle = " + finalAngle);
+            //console.log("targetTime = " + targetTime + ", stopping t = " + t + ", angle = " + angle + ", finalAngle = " + finalAngle);
             spinning = false;
         }
         requestAnimationFrame(drawWheel);
